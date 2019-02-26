@@ -44,7 +44,7 @@ function findSmaller(num) {
     }
   }
 
-  return result;
+  return Number(result);
 }
 
 function anyBigger(arr, number) {
