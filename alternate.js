@@ -33,7 +33,7 @@ function nextSmaller(num) {
       //   );
       result =
         remainingNumber.join('') +
-        findSecondSmaller([...smallerDigits.reverse(), numberBeingChecked, ...failureDigits].join(''), resultantDigit);
+        findSecondSmaller([...smallerDigits.reverse(), numberBeingChecked, ...failureDigits, resultantDigit].join(''));
     } else {
       result = numArr.slice();
       const numberAtFoundDigit = result[indexOfDigit];
@@ -80,16 +80,16 @@ function generateAnagrams(word) {
   }
 }
 
-function findSecondSmaller(str, startDigit) {
-  console.log(str, startDigit);
-  const anagrams = generateAnagrams(str);
-  console.log(anagrams);
-  const initialNumber = Number(startDigit + str);
-  const smallers = anagrams
-    .map(a => startDigit + a)
-    .filter(a => {
-      return Number(a) < initialNumber;
-    });
+function findSecondSmaller(str) {
+  console.log(str);
+  const smallers = generateAnagrams(str);
+  console.log(smallers);
+  //   const initialNumber = Number(startDigit + str);
+  //   const smallers = anagrams
+  //     .map(a => startDigit + a)
+  //     .filter(a => {
+  //       return Number(a) < initialNumber;
+  //     });
   return smallers.sort()[smallers.length - 1];
 }
 
