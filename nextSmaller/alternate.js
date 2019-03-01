@@ -14,31 +14,39 @@ function nextSmaller(num) {
     const numberBeingChecked = numArr[i];
     const filteredArray = numArr.filter((n, j) => j < i);
     biggerResult = anyBigger(filteredArray, numberBeingChecked, failureDigits);
-
     if (biggerResult) {
-      biggerResult = { ...biggerResult, foundIndex: i };
-      break;
+      if (biggerResult.areEqual && biggerResult.smallerDigits.length === 0) {
+        failureDigits.push(numberBeingChecked);
+        continue;
+      } else {
+        biggerResult = { ...biggerResult, foundIndex: i };
+        break;
+      }
     } else failureDigits.push(numberBeingChecked);
   }
-  console.log(biggerResult);
 
+  console.log(biggerResult, failureDigits);
   if (biggerResult) {
     const { indexOfDigit, numberBeingChecked, foundIndex, smallerDigits, resultantDigit } = biggerResult;
 
     if (biggerResult.areEqual) {
       const remainingNumber = numArr.slice(0, indexOfDigit);
+
       //   console.log(
       //     remainingNumber,
       //     findSecondSmaller([...smallerDigits.reverse(), numberBeingChecked, ...failureDigits].join(''), resultantDigit)
       //   );
       result =
         remainingNumber.join('') +
-        findSecondSmaller([...smallerDigits.reverse(), numberBeingChecked, ...failureDigits, resultantDigit].join(''));
+        findSecondSmaller(
+          [numberBeingChecked, ...smallerDigits.reverse(), ...failureDigits.reverse(), resultantDigit].join('')
+        );
     } else {
       result = numArr.slice();
       const numberAtFoundDigit = result[indexOfDigit];
       result[indexOfDigit] = numberBeingChecked;
       result[foundIndex] = numberAtFoundDigit;
+      // console.log(result);
       result = [
         ...result.slice(0, indexOfDigit + 1),
         ...result
@@ -81,23 +89,22 @@ function generateAnagrams(word) {
 }
 
 function findSecondSmaller(str) {
-  console.log(str);
-  const smallers = generateAnagrams(str);
-  console.log(smallers);
-  //   const initialNumber = Number(startDigit + str);
-  //   const smallers = anagrams
-  //     .map(a => startDigit + a)
-  //     .filter(a => {
-  //       return Number(a) < initialNumber;
-  //     });
-  return smallers.sort()[smallers.length - 1];
+  // console.log(str);
+  let smallers = generateAnagrams(str);
+
+  const initialNumber = Number(str);
+  smallers = smallers.filter(a => {
+    return Number(a) < initialNumber;
+  });
+  // console.log(smallers.sort());
+  return smallers.sort()[smallers.length - 2];
 }
 
 function anyBigger(arr, number, existingFailures) {
   const result = null;
   const smallerDigits = [];
   for (i = arr.length - 1; i >= 0; i--) {
-    if (number <= arr[i])
+    if (number <= arr[i]) {
       return {
         resultantDigit: arr[i],
         indexOfDigit: i,
@@ -105,7 +112,7 @@ function anyBigger(arr, number, existingFailures) {
         smallerDigits,
         areEqual: number === arr[i],
       };
-    else smallerDigits.push(arr[i]);
+    } else smallerDigits.push(arr[i]);
   }
 
   return result;
