@@ -12,7 +12,7 @@ describe('Find Smaller tests', () => {
     assert.equal(nextSmaller(31039956537), 31039956375);
     assert.equal(nextSmaller(3255), 2553);
     assert.equal(nextSmaller(6406), 6064);
-    assert.equal(nextSmaller(7234516), 6754321);
+    assert.equal(nextSmaller(7234516), 7234165);
     assert.equal(nextSmaller(88040544976406), 88040544976064);
     assert.equal(nextSmaller(542424685912122), 542424685911222);
     assert.equal(nextSmaller(8441212), 8441122);
