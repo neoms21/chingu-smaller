@@ -2,10 +2,10 @@ var nextSmaller = require('./solution');
 
 var assert = require('assert');
 describe('Find Smaller tests', () => {
-  // it('should return -1', () => {
-  //   var result = nextSmaller(100);
-  //   assert.equal(result, -1);
-  // });
+  it('should return -1', () => {
+    var result = nextSmaller(100);
+    assert.equal(result, -1);
+  });
 
   it('returns next small number', () => {
     assert.equal(nextSmaller(1), -1);
