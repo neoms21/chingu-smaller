@@ -37,48 +37,40 @@ function decode(input, railsLength) {
     const resultsArr = [];
     let result = '';
     const arrayLengths = [];
-    let inputLength = input.length;
-    const dividend = Math.floor(inputLength / railsLength);
-    let rem = inputLength % railsLength;
 
-    Array(railsLength)
+const keys = Array(railsLength)
         .fill(1)
-        .map((x, y) => x + y)
-        .forEach(() => arrayLengths.push(dividend));
-        
-    Array(railsLength)
-        .fill(1)
-        .map((x, y) => x + y)
-        .forEach(() => resultsArr.push([]));
-    let index = 0;
-    while (rem !== 0) {
-        arrayLengths[index] += rem--;
-    }
+        .map((x, y) => x + y -1);
 
-    console.log(arrayLengths, rem);
-    // const inputArr = input.split('');
-    // let forwardDirection = true;
-    // let j = 0;
-    // //WECRLTEERDSOEEFEAOCAIVDEN
-    // inputArr.forEach((a, i) => {
-    //     const rem = i % railsLength;
-    //     resultsArr[rem].push(a);
-    //     // if (j === railsLength - 1 && forwardDirection) {
-    //     //     j--;
-    //     //     forwardDirection = !forwardDirection;
-    //     // } else {
-    //     //     if (j === 1 && !forwardDirection) {
-    //     //         forwardDirection = !forwardDirection;
-    //     //         j = 0;
-    //     //     } else j++;
-    //     // }
-    // });
 
-    // resultsArr.forEach(r => {
-    //     result += r.join('');
-    // });
 
-    return result;
+    const inputArr = input.split('');
+    let forwardDirection = true;
+    let j = 0;
+    const arrs= [];
+    inputArr.forEach((a, i) => {
+      arrs.push(j);
+        if (j === railsLength - 1 && forwardDirection) {
+            j--;
+            forwardDirection = !forwardDirection;
+        } else {
+            if (j === 1 && !forwardDirection) {
+                forwardDirection = !forwardDirection;
+                j = 0;
+            } else j++;
+        }
+    });
+    let prevStart = 0;
+    keys.forEach((k,i)=> {
+      
+      const len = arrs.filter(a=> a===k).length;
+       resultsArr.push(input.substr(prevStart , len).split(''));
+       prevStart +=len;
+       
+    });
+
+    console.log(resultsArr);
+
 }
 
 module.exports = { encode, decode };
